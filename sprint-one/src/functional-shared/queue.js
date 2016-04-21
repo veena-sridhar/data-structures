@@ -9,10 +9,22 @@ var Queue = function() {
 };
 
 var queueMethods = {
-  enqueue: function(){},
-  dequeue: function(){},
+  enqueue: function (value) {
+    this.storage[this.myLength] = value;
+    this.myLength++;
+  },
+  dequeue: function () {
+    var dequeued = this.storage[0];
+    delete this.storage[0];
+    this.myLength--;
+    for (var key in this.storage){
+      this.storage[key-1] = this.storage[key];
+      delete this.storage[key];
+    }
+    return dequeued;
+  },
   size: function(){
-    return myLength > 0 ? myLength : 0;
+    return this.myLength > 0 ? this.myLength : 0;
   }
 };
 
