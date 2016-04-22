@@ -18,31 +18,31 @@ treeMethods.addChild = function(value) {
   
 };
 
-treeMethods.contains = function(target, flag) {
-  // var flag = flag || false;
-  // for (var i = 0; i < this.children.length; i++) {
-  //   if (this.children[i].value === target) {
-  //     flag = true;
-  //   } else if (this.children[i].children.length > 0) {
-  //     this.children[i].contains(target, flag);
-  //   }
-  // }
-  // return flag;
+treeMethods.contains = function(target, currentNode, flag) {
+  //current node that we're going to inspect. Starts with parent node;
+  var currentNode = currentNode || this;
+  //flag if we found something or not
+  var flag = flag || false;
 
-  while (currentNode.children.length > 0){
-    for (var i = 0; i < currentNode.children.length; i++) {
-      if (currentNode.value === target){
+  //loop through all children of current node
+  for (var i = 0; i < currentNode.children.length; i++) {
+
+    //base case: this level has the value
+    if (currentNode.children[i].value === target) {
+      flag = true;
+    }
+
+    //recursive case inspect children
+    if (currentNode.children[i].children.length > 0) {
+      var result = this.contains(target, currentNode.children[i], flag);
+      if (result === true) {
         flag = true;
       }
-      
     }
 
   }
-
-
-
-
-
+  
+  return flag;
 };
 
 
