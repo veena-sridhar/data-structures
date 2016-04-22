@@ -24,11 +24,7 @@ var LinkedList = function() {
       list.head.next = newNode;
     }
 
-    // if (list.head = null){
-    //   list.head.next = newNode;
-    // }
     list.tail = newNode;
-
 
   };
 
@@ -39,11 +35,14 @@ var LinkedList = function() {
   };
 
   list.contains = function(target) {
-    for (var key in this.node) {
-      if (this.node.value === target ) {
+    var currentNode = list.head;
+    while (currentNode.next != null || currentNode.value === target) {
+      if (currentNode.value === target) {
         return true;
       }
+      currentNode = currentNode.next;  
     }
+
     return false;
   };
 
@@ -54,3 +53,7 @@ var LinkedList = function() {
 /*
  * Complexity: What is the time complexity of the above functions?
  */
+
+ //complexity of add: O(1)
+ //comnplexity of removeHead: O(1)
+ //complexity of contains: O(n)
