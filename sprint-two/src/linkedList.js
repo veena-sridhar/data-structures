@@ -1,52 +1,51 @@
-var Node = function(value) {
-  var node = {};
-  node.value = value;
-  node.next = null;
+var LinkedList = function () {
+  var obj = {};
+  obj.head = {};
+  obj.tail = {};
 
-  return node;
-};
 
-var LinkedList = function() {
-  var list = {};
-  list.head = null;
-  list.tail = null;
-  
-  list.addToTail = function(value) {
-    var newNode = new Node(value);
-    var currentNode = list.tail;
-    //if there is only one node which is tail
-    if (list.head === null && list.tail === null ) {
-      list.head = newNode;
-      list.head.next = newNode;      
-    }
+  obj.addToTail = function (value) {
+    //if head is empty, both head and tail point to the same
+    //value
+    var newNode = Node();
+    newNode.value = value;
 
-    if (list.head === list.tail) {
-      list.head.next = newNode;
-    }
-
-    list.tail = newNode;
-
+    if (this.head.value === undefined) {
+      //have both head and tail point to the value
+      this.head = newNode;
+    } 
+    //when you add to tail, move the tail pointer to new node
+    
+    //and make the old tail point to the new one
+    this.tail.next = newNode;
+    this.tail = newNode;
   };
 
-  list.removeHead = function() {
-    var removed = list.head.value;
-    list.head = list.head.next;
-    return removed;
+  obj.removeHead = function () {
+    var removed = this.head;
+    this.head = this.head.next;
+    return removed.value;
   };
 
-  list.contains = function(target) {
-    var currentNode = list.head;
-    while (currentNode.next != null || currentNode.value === target) {
-      if (currentNode.value === target) {
+  obj.contains = function (value) {
+    var currentObj = this.head;
+    while (true) {
+      if (currentObj.value === value) {
         return true;
+      } 
+      if (currentObj.next === null) {
+        return false;
       }
-      currentNode = currentNode.next;  
+      currentObj = currentObj.next;
     }
-
-    return false;
   };
-
-  return list;
+  return obj;
+};
+var Node = function () {
+  var obj = {};
+  obj.value = null;
+  obj.next = null;
+  return obj;
 };
 
 
