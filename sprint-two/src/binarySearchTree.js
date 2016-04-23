@@ -20,7 +20,7 @@ var findParent = function (tree, value) {
       return tree;        
     }
   }
-  if (value <= tree.value) {
+  if (value < tree.value) {
     //RECURSIVE CASE left is occupied
     if (tree.left) {
       return findParent(tree.left, value);
@@ -28,9 +28,13 @@ var findParent = function (tree, value) {
     //BASE CASE left is free
       return tree;        
     }
+
+  }
+  if (value === tree.value) {
+    return 'match';
   }
 
-  return node;
+  return tree;
 };
 
 searchTreeMethods = {
@@ -56,7 +60,7 @@ searchTreeMethods = {
       parentNode.right = newNode;
     } 
     // if it's smaller - assign to left
-    if (value <= parentNode.value) {
+    if (value < parentNode.value) {
       parentNode.left = newNode;
     } 
 
@@ -64,25 +68,25 @@ searchTreeMethods = {
   },
 
   contains: function (value) {
-    var findValue = function (obj) {
-      if (value === obj.value) {
-        return true;
-      } else {
-        if (value > obj.value) {
-          return findValue(obj.right);
-        } else if (value <= obj.value) {
-          return findValue(obj.left);
-        }
-      }
-      findValue(obj);
-      return false;
-    };
-
+    if (findParent(this, value) === 'match') {
+      return true;
+    }
     
+    return false;
   },
 
-  depthFirstLog: function (value) {
-
+  depthFirstLog: function (callback) {
+    var obj = this;
+    var innerFunction = function (obj) {
+      callback(obj.value);
+      if (obj.right) {
+        innerFunction(obj.right);
+      }
+      if (obj.left) {
+        innerFunction(obj.left);
+      }
+    };
+    innerFunction(obj);
   }
 
 };
