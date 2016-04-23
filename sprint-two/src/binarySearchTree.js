@@ -75,18 +75,15 @@ searchTreeMethods = {
     return false;
   },
 
-  depthFirstLog: function (callback) {
-    var obj = this;
-    var innerFunction = function (obj) {
-      callback(obj.value);
-      if (obj.right) {
-        innerFunction(obj.right);
-      }
-      if (obj.left) {
-        innerFunction(obj.left);
-      }
-    };
-    innerFunction(obj);
+  depthFirstLog: function (callback, obj) {
+    var obj = obj || this;
+    callback(obj.value);
+    if (obj.right) {
+      this.depthFirstLog(callback, obj.right);
+    }
+    if (obj.left) {
+      this.depthFirstLog(callback, obj.left);
+    }
   }
 
 };
